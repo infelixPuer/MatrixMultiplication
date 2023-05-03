@@ -34,7 +34,8 @@
             <TextBox
                 Margin="5 10 5 0"
                 Height="30"
-                Width="100"/>
+                Width="100"
+                VerticalContentAlignment="Center"/>
 
         </StackPanel>
 
@@ -51,7 +52,8 @@
             <TextBox
                 Margin="5 10 5 0"
                 Height="30"
-                Width="100"/>
+                Width="100"
+                VerticalContentAlignment="Center"/>
 
         </StackPanel>
 

@@ -8,10 +8,11 @@
         Title="Matrix multiplication" 
         Height="450" 
         Width="800"
-        MinHeight="250"
+        MinHeight="350"
         MinWidth="715"
         FontFamily="Arial"
-        FontSize="20">
+        FontSize="20"
+        SizeToContent="WidthAndHeight">
     <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -38,20 +39,20 @@
                 <TextBox
                     Width="70"
                     Height="30"
-                    Margin="5 10">
-                </TextBox>
+                    Margin="5 10"
+                    VerticalContentAlignment="Center"/>
 
-                <TextBlock 
+                    <TextBlock 
                     Margin="2 10"
                     Text="x"/>
 
                 <TextBox
                     Width="70"
                     Height="30"
-                    Margin="5 10">
-                </TextBox>
+                    Margin="5 10"
+                    VerticalContentAlignment="Center"/>
 
-                <TextBlock
+                    <TextBlock
                     Margin="5 10">
                     Second matrix:
                 </TextBlock>
@@ -59,20 +60,20 @@
                 <TextBox
                     Width="70"
                     Height="30"
-                    Margin="5 10">
-                </TextBox>
+                    Margin="5 10"
+                    VerticalContentAlignment="Center"/>
 
-                <TextBlock
+                    <TextBlock
                     Margin="2 10"
                     Text="x"/>
 
                 <TextBox
                     Width="70"
                     Height="30"
-                    Margin="5 10">
-                </TextBox>
+                    Margin="5 10"
+                    VerticalContentAlignment="Center"/>
 
-                <Button
+                    <Button
                     Width="80"
                     Height="30"
                     Margin="5 10"
@@ -143,6 +144,20 @@
                         </Style>
                     </Button.Resources>
                     Clear
+                </Button>
+
+                <Button x:Name="ExecuteButton"
+                        Width="250"
+                        Height="40"
+                        Margin="5 10 5 10"
+                        Click="ClearButton_OnClick"
+                        Foreground="Red">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Execute
                 </Button>
             </StackPanel>
         </Grid>
