@@ -119,10 +119,11 @@
                     Fill with sum of coords
                 </Button>
 
-                <Button
+                <Button x:Name="FillWithCoordsProductButton"
                     Width="250"
                     Height="40"
-                    Margin="5 10 5 0">
+                    Margin="5 10 5 0"
+                    Click="FillWithCoordsProductButton_OnClick">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
