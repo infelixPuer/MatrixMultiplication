@@ -12,69 +12,103 @@
         MinWidth="625"
         FontFamily="Arial"
         FontSize="20">
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel 
-            Grid.Column="0" 
-            Grid.Row="0"
-            Grid.ColumnSpan="3">
-            
-            <TextBlock
-                Margin="5 10">
-                First matrix:
-            </TextBlock>
-
-            <TextBox
-                Width="100"
-                Height="30"
-                Margin="5 10"
-                >
-            </TextBox>
-
-            <TextBlock
-                Margin="5 10">
-                Second matrix:
-            </TextBlock>
-
-            <TextBox
-                Width="100"
-                Height="30"
-                Margin="5 10">
-            </TextBox>
-
-            <Button
-                Width="120"
-                Height="30"
-                Margin="5 10"
-                HorizontalAlignment="Right">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                Confirm
-            </Button>
-        </DockPanel>
-
-        <StackPanel 
-            Grid.Column="1"
-            Grid.Row="0"
-            Orientation="Horizontal">
-
-        </StackPanel>
-
-        <CheckBox
+        <Grid x:Name="MatrixSizesGrid"
             Grid.Column="0"
-            Grid.Row="1"></CheckBox>
+            Grid.Row="0"
+            Grid.ColumnSpan="2">
+
+            <DockPanel>
+
+                <TextBlock
+                    Margin="5 10">
+                    First matrix:
+                </TextBlock>
+
+                <TextBox
+                    Width="100"
+                    Height="30"
+                    Margin="5 10">
+                </TextBox>
+
+                <TextBlock
+                    Margin="5 10">
+                    Second matrix:
+                </TextBlock>
+
+                <TextBox
+                    Width="100"
+                    Height="30"
+                    Margin="5 10">
+                </TextBox>
+
+                <Button
+                    Width="120"
+                    Height="30"
+                    Margin="5 10"
+                    HorizontalAlignment="Right">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Confirm
+                </Button>
+            </DockPanel>
+        </Grid>
+
+        <Grid x:Name="FillingOptionsGrid"
+              Grid.Column="0"
+              Grid.Row="1">
+            
+            <StackPanel>
+                <Button
+                    Width="250"
+                    Height="40"
+                    Margin="5 10 5 0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Fill with one number
+                </Button>
+
+                <Button
+                    Width="250"
+                    Height="40"
+                    Margin="5 10 5 0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Fill with sum of coords
+                </Button>
+
+                <Button
+                    Width="250"
+                    Height="40"
+                    Margin="5 10 5 0">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Fill with product of coords
+                </Button>
+            </StackPanel>
+
+        </Grid>
     </Grid>
 </Window>
