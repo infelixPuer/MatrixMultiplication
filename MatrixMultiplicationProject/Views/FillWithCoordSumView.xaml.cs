@@ -2,9 +2,9 @@
 
 namespace MatrixMultiplicationProject.Views;
 
-public partial class FillWithNumberView : UserControl
+public partial class FillWithCoordSumView : UserControl
 {
-    public FillWithNumberView()
+    public FillWithCoordSumView()
     {
         InitializeComponent();
     }

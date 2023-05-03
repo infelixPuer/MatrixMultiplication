@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="MatrixMultiplicationProject.Views.FillWithCoordSumView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MatrixMultiplicationProject.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800"
+             FontFamily="Arial"
+             FontSize="20">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Column="0"
+            Grid.Row="0"
+            Margin="5 10">
+            3 by 3 matrix will look like this:
+        </TextBlock>
+
+        <Grid x:Name="MatrixExampleGrid"
+            Grid.Column="0"
+            Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="0"
+                Margin="5 5 0 0">
+                0
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="0"
+                Margin="5 5 0 0">
+                1
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="2"
+                Grid.Row="0"
+                Margin="5 5 0 0">
+                2
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="1"
+                Margin="5 5 0 0">
+                1
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="5 5 0 0">
+                2
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="2"
+                Grid.Row="1"
+                Margin="5 5 0 0">
+                3
+            </TextBlock>
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="2"
+                Margin="5 5 0 0">
+                2
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="2"
+                Margin="5 5 0 0">
+                3
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="2"
+                Grid.Row="2"
+                Margin="5 5 0 0">
+                4
+            </TextBlock>
+
+        </Grid>
+
+        <DockPanel x:Name="Container"
+                   Grid.Column="1"
+                   Grid.Row="1"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Stretch"
+                   Margin="5 10">
+            <Button
+                Width="{Binding ElementName=Container, Path=ActualWidth}"
+                MinWidth="50"
+                MaxWidth="150"
+                Height="30"
+                HorizontalAlignment="Right">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Fill
+            </Button>
+        </DockPanel>
+    </Grid>
+</UserControl>

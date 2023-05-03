@@ -8,8 +8,8 @@
         Title="Matrix multiplication" 
         Height="450" 
         Width="800"
-        MinHeight="90"
-        MinWidth="625"
+        MinHeight="250"
+        MinWidth="715"
         FontFamily="Arial"
         FontSize="20">
     <Grid x:Name="MainGrid">
@@ -73,7 +73,7 @@
                 </TextBox>
 
                 <Button
-                    Width="120"
+                    Width="80"
                     Height="30"
                     Margin="5 10"
                     HorizontalAlignment="Right">
@@ -106,10 +106,11 @@
                     Fill with one number
                 </Button>
 
-                <Button
+                <Button x:Name="FillWithCoordsSumButton"
                     Width="250"
                     Height="40"
-                    Margin="5 10 5 0">
+                    Margin="5 10 5 0"
+                    Click="FillWithCoordsSumButton_OnClick">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -128,6 +129,19 @@
                         </Style>
                     </Button.Resources>
                     Fill with product of coords
+                </Button>
+
+                <Button x:Name="ClearButton"
+                    Width="250"
+                    Height="40"
+                    Margin="5 10 5 0"
+                    Click="ClearButton_OnClick">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Clear
                 </Button>
             </StackPanel>
         </Grid>
