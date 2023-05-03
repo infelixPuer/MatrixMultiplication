@@ -1,4 +1,4 @@
-﻿<Window x:Class="MatrixMultiplicationProject.MainWindow"
+﻿<Window x:Class="MatrixMultiplicationProject.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -36,7 +36,17 @@
                 </TextBlock>
 
                 <TextBox
-                    Width="100"
+                    Width="70"
+                    Height="30"
+                    Margin="5 10">
+                </TextBox>
+
+                <TextBlock 
+                    Margin="2 10"
+                    Text="x"/>
+
+                <TextBox
+                    Width="70"
                     Height="30"
                     Margin="5 10">
                 </TextBox>
@@ -47,7 +57,17 @@
                 </TextBlock>
 
                 <TextBox
-                    Width="100"
+                    Width="70"
+                    Height="30"
+                    Margin="5 10">
+                </TextBox>
+
+                <TextBlock
+                    Margin="2 10"
+                    Text="x"/>
+
+                <TextBox
+                    Width="70"
                     Height="30"
                     Margin="5 10">
                 </TextBox>
@@ -73,9 +93,11 @@
             
             <StackPanel>
                 <Button
+                    x:Name="FillWithNumberButton"
                     Width="250"
                     Height="40"
-                    Margin="5 10 5 0">
+                    Margin="5 10 5 0"
+                    Click="FillWithNumberButton_OnClick">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -108,7 +130,14 @@
                     Fill with product of coords
                 </Button>
             </StackPanel>
+        </Grid>
 
+        <Grid x:Name="OptionsViewGrid"
+              Grid.Column="1"
+              Grid.Row="1">
+            <ContentControl x:Name="ContentControl">
+
+            </ContentControl>
         </Grid>
     </Grid>
 </Window>
