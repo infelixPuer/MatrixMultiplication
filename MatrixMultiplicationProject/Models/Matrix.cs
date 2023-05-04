@@ -55,14 +55,16 @@ public class Matrix
         var result = new long[a.Columns, b.Rows];
 
         for (int rows = 0; rows < result.GetLength(0); rows++)
-            for (int cols = 0; cols < result.GetLength(1); cols++)
+        for (int cols = 0; cols < result.GetLength(1); cols++)
                 result[rows, cols] = DotProduct(GetRow(a.Values, rows), GetColumn(b.Values, cols));
+
 
         return new Matrix(result);
     }
 
     public static long DotProduct(long[] a, long[] b) => 
         a.Select((t, i) => t * b[i]).Sum();
+
 
     public static long[] GetColumn(long[,] array, int col)
     {
