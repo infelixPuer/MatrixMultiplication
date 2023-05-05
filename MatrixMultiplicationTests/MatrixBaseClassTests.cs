@@ -225,4 +225,21 @@ public class MatrixBaseClassTests
 
         Assert.That(col, Is.EqualTo(result));
     }
+
+    [Test]
+    public void CanMultiplyWithMultithreading()
+    {
+        var firstMatrix = new Matrix(500, 500);
+        var secondMatrix = new Matrix(500, 500);
+
+        firstMatrix.FillWithNumber(1);
+        secondMatrix.FillWithNumber(1);
+
+        var result = firstMatrix * secondMatrix;
+
+        var values = new Matrix(500, 500);
+        values.FillWithNumber(500);
+
+        Assert.That(result.Values, Is.EqualTo(values.Values));
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace MatrixMultiplicationProject.Models;
 
@@ -52,14 +53,38 @@ public class Matrix
 
     public static Matrix operator *(Matrix a, Matrix b)
     {
-        var result = new long[a.Columns, b.Rows];
+        var result = new long[a.Rows, b.Columns];
+        var divisor = GetDivisor(result).ToString();
 
-        for (int rows = 0; rows < result.GetLength(0); rows++)
-        for (int cols = 0; cols < result.GetLength(1); cols++)
-                result[rows, cols] = DotProduct(GetRow(a.Values, rows), GetColumn(b.Values, cols));
+        for (int i = 2; i < a.Rows.ToString().Length - 1; i++)
+            divisor += "0";
 
+        var taskArray = new Task[int.Parse(divisor)];
+
+        var count = a.Rows / int.Parse(divisor);
+
+        for (int i = 0; i < taskArray.Length; i++)
+        {
+            var iterator = i;
+
+            taskArray[i] = Task.Factory.StartNew(() =>
+            {
+                for (int r = iterator * count; r < count * (iterator + 1); r++)
+                    for (int c = 0; c < result.GetLength(1); c++)
+                        result[r, c] = DotProduct(GetRow(a.Values, r), GetColumn(b.Values, c));
+            });
+        }
+
+        Task.WaitAll(taskArray);
 
         return new Matrix(result);
+    }
+
+    private static int GetDivisor(long[,] array)
+    {
+        var arrayLength = array.GetLength(0);
+
+        return arrayLength < 10 ? 1 : 5;
     }
 
     public static long DotProduct(long[] a, long[] b) => 
