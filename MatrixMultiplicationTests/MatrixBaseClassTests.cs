@@ -229,16 +229,16 @@ public class MatrixBaseClassTests
     [Test]
     public void CanMultiplyWithMultithreading()
     {
-        var firstMatrix = new Matrix(500, 500);
-        var secondMatrix = new Matrix(500, 500);
+        var firstMatrix = new Matrix(1000, 1000);
+        var secondMatrix = new Matrix(1000, 1000);
 
         firstMatrix.FillWithNumber(1);
         secondMatrix.FillWithNumber(1);
 
         var result = firstMatrix * secondMatrix;
 
-        var values = new Matrix(500, 500);
-        values.FillWithNumber(500);
+        var values = new Matrix(1000, 1000);
+        values.FillWithNumber(1000);
 
         Assert.That(result.Values, Is.EqualTo(values.Values));
     }

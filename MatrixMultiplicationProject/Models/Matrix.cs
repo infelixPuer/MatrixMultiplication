@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using MatrixMultiplicationProject.Exceptions;
 
 namespace MatrixMultiplicationProject.Models;
 
@@ -53,6 +54,9 @@ public class Matrix
 
     public static Matrix operator *(Matrix a, Matrix b)
     {
+        if (a.Columns != b.Rows)
+            throw new IncompatibleMatricesException($"First matrix has {a.Columns} columns, but second matrix has {b.Rows} rows!");
+
         var result = new long[a.Rows, b.Columns];
         var divisor = GetDivisor(result).ToString();
 
