@@ -1,10 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MatrixMultiplicationProject.Models;
 
 namespace MatrixMultiplicationProject.ViewModels;
 
-public partial class EnterDataViewModel : ObservableObject
+public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
     private int _firstMatrixRows;
@@ -24,10 +25,29 @@ public partial class EnterDataViewModel : ObservableObject
     [ObservableProperty]
     private long[,]? _secondMatrix;
 
+    [ObservableProperty] 
+    private long[,]? _result;
+
+    [ObservableProperty] 
+    private CancellationTokenSource _tokenSource;
+
+    public MainViewModel()
+    {
+        TokenSource = new CancellationTokenSource();
+    }
+
     [RelayCommand]
-    public void ConfirmMatrixSizes()
+    private void ConfirmMatrixSizes()
     {
         FirstMatrix = new long[FirstMatrixRows, FirstMatrixColumns];
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
+    }
+
+
+    [RelayCommand]
+    private void MultiplyMatricesAsync()
+    {
+        var token = TokenSource.Token;
+        Result = MatrixMultiplicationBase.MultiplyAsync(FirstMatrix, SecondMatrix, token).Result;
     }
 }

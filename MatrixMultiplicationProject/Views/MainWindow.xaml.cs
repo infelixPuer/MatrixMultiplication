@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using MatrixMultiplicationProject.ViewModels;
 
 namespace MatrixMultiplicationProject.Views;
 
@@ -11,6 +12,7 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = new MainViewModel();
         _fillWithNumberView = new FillWithNumberView();
         _fillWithCoordSumView = new FillWithCoordSumView();
         _fillWithCoordProductView = new FillWithCoordsProductView();

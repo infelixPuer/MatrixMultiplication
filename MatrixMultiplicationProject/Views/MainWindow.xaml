@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatrixMultiplicationProject"
+        xmlns:viewModels="clr-namespace:MatrixMultiplicationProject.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
         Title="Matrix multiplication" 
         Height="450" 
         Width="800"
@@ -40,7 +42,8 @@
                     Width="70"
                     Height="30"
                     Margin="5 10"
-                    VerticalContentAlignment="Center"/>
+                    VerticalContentAlignment="Center"
+                    Text="{Binding FirstMatrixRows}"/>
 
                     <TextBlock 
                     Margin="2 10"
@@ -50,9 +53,10 @@
                     Width="70"
                     Height="30"
                     Margin="5 10"
-                    VerticalContentAlignment="Center"/>
+                    VerticalContentAlignment="Center"
+                    Text="{Binding FirstMatrixColumns}"/>
 
-                    <TextBlock
+                <TextBlock
                     Margin="5 10">
                     Second matrix:
                 </TextBlock>
@@ -61,9 +65,10 @@
                     Width="70"
                     Height="30"
                     Margin="5 10"
-                    VerticalContentAlignment="Center"/>
+                    VerticalContentAlignment="Center"
+                    Text="{Binding SecondMatrixRows}"/>
 
-                    <TextBlock
+                <TextBlock
                     Margin="2 10"
                     Text="x"/>
 
@@ -71,13 +76,15 @@
                     Width="70"
                     Height="30"
                     Margin="5 10"
-                    VerticalContentAlignment="Center"/>
+                    VerticalContentAlignment="Center"
+                    Text="{Binding SecondMatrixColumns}"/>
 
                     <Button
                     Width="80"
                     Height="30"
                     Margin="5 10"
-                    HorizontalAlignment="Right">
+                    HorizontalAlignment="Right"
+                    Command="{Binding ConfirmMatrixSizesCommand}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
