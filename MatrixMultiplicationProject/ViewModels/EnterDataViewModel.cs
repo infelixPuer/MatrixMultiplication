@@ -19,15 +19,15 @@ public partial class EnterDataViewModel : ObservableObject
     private int _secondMatrixColumns;
 
     [ObservableProperty]
-    private Matrix? _firstMatrix;
+    private long[,]? _firstMatrix;
 
     [ObservableProperty]
-    private Matrix? _secondMatrix;
+    private long[,]? _secondMatrix;
 
     [RelayCommand]
     public void ConfirmMatrixSizes()
     {
-        FirstMatrix = new Matrix(FirstMatrixRows, FirstMatrixColumns);
-        SecondMatrix = new Matrix(SecondMatrixRows, SecondMatrixColumns);
+        FirstMatrix = new long[FirstMatrixRows, FirstMatrixColumns];
+        SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
     }
 }

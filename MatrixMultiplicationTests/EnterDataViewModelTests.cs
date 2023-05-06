@@ -71,10 +71,10 @@ public class EnterDataViewModelTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(firstMatrix.Rows, Is.EqualTo(vm.FirstMatrixRows));
-            Assert.That(firstMatrix.Columns, Is.EqualTo(vm.FirstMatrixColumns));
-            Assert.That(secondMatrix.Rows, Is.EqualTo(vm.SecondMatrixRows));
-            Assert.That(secondMatrix.Columns, Is.EqualTo(vm.SecondMatrixColumns));
+            Assert.That(firstMatrix?.GetLength(0), Is.EqualTo(vm.FirstMatrixRows));
+            Assert.That(firstMatrix?.GetLength(1), Is.EqualTo(vm.FirstMatrixColumns));
+            Assert.That(secondMatrix?.GetLength(0), Is.EqualTo(vm.SecondMatrixRows));
+            Assert.That(secondMatrix?.GetLength(1), Is.EqualTo(vm.SecondMatrixColumns));
         });
     }
 }
