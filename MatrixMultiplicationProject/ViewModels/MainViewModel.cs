@@ -20,9 +20,11 @@ public partial class MainViewModel : ObservableObject
     private int _secondMatrixColumns;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(MultiplyMatricesAsyncCommand))]
     private long[,]? _firstMatrix;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(MultiplyMatricesAsyncCommand))]
     private long[,]? _secondMatrix;
 
     [ObservableProperty] 
@@ -43,8 +45,11 @@ public partial class MainViewModel : ObservableObject
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
     }
 
+    private bool CanClick() 
+        => FirstMatrix is not null && SecondMatrix is not null;
+    
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanClick))]
     private void MultiplyMatricesAsync()
     {
         var token = TokenSource.Token;

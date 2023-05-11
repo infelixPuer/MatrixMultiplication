@@ -157,7 +157,7 @@
                         Width="250"
                         Height="40"
                         Margin="5 10 5 10"
-                        Click="ClearButton_OnClick"
+                        Command="{Binding MultiplyMatricesAsyncCommand}"
                         Foreground="Red">
                     <Button.Resources>
                         <Style TargetType="Border">
