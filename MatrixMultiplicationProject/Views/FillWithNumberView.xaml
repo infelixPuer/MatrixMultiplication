@@ -4,11 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MatrixMultiplicationProject.Views"
+             xmlns:viewModels="clr-namespace:MatrixMultiplicationProject.ViewModels"
+             xmlns:converters="clr-namespace:MatrixMultiplicationProject.Converters"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:FillWithNumberViewModel}"
              d:DesignHeight="450" 
              d:DesignWidth="800"
              FontFamily="Arial"
              FontSize="20">
+    <UserControl.Resources>
+        <converters:LongToStringConverter x:Key="LongToStringConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -35,7 +41,8 @@
                 Margin="5 10 5 0"
                 Height="30"
                 Width="100"
-                VerticalContentAlignment="Center"/>
+                VerticalContentAlignment="Center"
+                Text="{Binding Number1, Mode=OneWayToSource, Converter={StaticResource LongToStringConverter}}"/>
 
         </StackPanel>
 
@@ -53,7 +60,8 @@
                 Margin="5 10 5 0"
                 Height="30"
                 Width="100"
-                VerticalContentAlignment="Center"/>
+                VerticalContentAlignment="Center"
+                Text="{Binding Number2, Mode=OneWayToSource, Converter={StaticResource StringToLongConverter}}"/>
 
         </StackPanel>
 
@@ -68,7 +76,8 @@
                 MinWidth="50"
                 MaxWidth="150"
                 Height="30"
-                HorizontalAlignment="Right">
+                HorizontalAlignment="Right"
+                Command="{Binding ProcessFillingOptionCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>

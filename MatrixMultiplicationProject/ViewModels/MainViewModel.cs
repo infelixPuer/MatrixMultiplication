@@ -1,12 +1,17 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using MatrixMultiplicationProject.Models;
 
 namespace MatrixMultiplicationProject.ViewModels;
 
-public partial class MainViewModel : ObservableObject
+public partial class MainViewModel : ObservableRecipient
 {
+    [ObservableProperty]
+    private Action<long[,], long[,]>? _fillingOption;
+
     [ObservableProperty]
     private int _firstMatrixRows;
 
@@ -34,6 +39,15 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel()
     {
         TokenSource = new CancellationTokenSource();
+        WeakReferenceMessenger.Default.Register<Action<long[,], long[,]>>(this, (r, m) =>
+        {
+            FillingOption = m;
+        });
+    }
+
+    partial void OnFillingOptionChanged(Action<long[,], long[,]>? value)
+    {
+        FillingOption?.Invoke(FirstMatrix!, SecondMatrix!);
     }
 
     [RelayCommand]
@@ -48,6 +62,6 @@ public partial class MainViewModel : ObservableObject
     private void MultiplyMatricesAsync()
     {
         var token = TokenSource.Token;
-        Result = MatrixMultiplicationBase.MultiplyAsync(FirstMatrix, SecondMatrix, token).Result;
+        Result = MatrixMultiplicationBase.MultiplyAsync(FirstMatrix!, SecondMatrix!, token).Result;
     }
 }
