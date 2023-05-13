@@ -105,7 +105,8 @@
                     Width="250"
                     Height="40"
                     Margin="5 10 5 0"
-                    Click="FillWithNumberButton_OnClick">
+                    Click="FillWithNumberButton_OnClick"
+                    IsEnabled="{Binding IsConfirmed}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -118,7 +119,8 @@
                     Width="250"
                     Height="40"
                     Margin="5 10 5 0"
-                    Click="FillWithCoordsSumButton_OnClick">
+                    Click="FillWithCoordsSumButton_OnClick"
+                    IsEnabled="{Binding IsConfirmed}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -131,7 +133,8 @@
                     Width="250"
                     Height="40"
                     Margin="5 10 5 0"
-                    Click="FillWithCoordsProductButton_OnClick">
+                    Click="FillWithCoordsProductButton_OnClick"
+                    IsEnabled="{Binding IsConfirmed}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -144,7 +147,8 @@
                     Width="250"
                     Height="40"
                     Margin="5 10 5 0"
-                    Click="ClearButton_OnClick">
+                    Click="ClearButton_OnClick"
+                    IsEnabled="{Binding IsConfirmed}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>

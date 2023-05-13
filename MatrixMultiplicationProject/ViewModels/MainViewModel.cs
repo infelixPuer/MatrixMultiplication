@@ -33,6 +33,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] 
     private CancellationTokenSource _tokenSource;
 
+    [ObservableProperty] 
+    private bool _isConfirmed;
+
     public MainViewModel()
     {
         TokenSource = new CancellationTokenSource();
@@ -43,6 +46,7 @@ public partial class MainViewModel : ObservableObject
     {
         FirstMatrix = new long[FirstMatrixRows, FirstMatrixColumns];
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
+        IsConfirmed = true;
     }
 
     private bool CanClick() 
