@@ -25,9 +25,11 @@ public partial class MainViewModel : ObservableRecipient
     private int _secondMatrixColumns;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(MultiplyMatricesAsyncCommand))]
     private long[,]? _firstMatrix;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(MultiplyMatricesAsyncCommand))]
     private long[,]? _secondMatrix;
 
     [ObservableProperty] 
@@ -35,6 +37,9 @@ public partial class MainViewModel : ObservableRecipient
 
     [ObservableProperty] 
     private CancellationTokenSource _tokenSource;
+
+    [ObservableProperty] 
+    private bool _isConfirmed;
 
     public MainViewModel()
     {
@@ -55,10 +60,14 @@ public partial class MainViewModel : ObservableRecipient
     {
         FirstMatrix = new long[FirstMatrixRows, FirstMatrixColumns];
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
+        IsConfirmed = true;
     }
 
+    private bool CanClick() 
+        => FirstMatrix is not null && SecondMatrix is not null;
+    
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanClick))]
     private void MultiplyMatricesAsync()
     {
         var token = TokenSource.Token;
