@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,8 +58,10 @@ public static class MatrixMultiplicationBase
         return result;
     }
 
-    public static async Task<long[,]> MultiplyAsync(long[,] matrix1, long[,] matrix2, CancellationToken token)
+    public static async Task<long[,]> MultiplyAsync(Matrices matrices, CancellationToken token, IProgress<double> progress = null)
     {
+        var matrix1 = matrices.FirstMatrix;
+        var matrix2 = matrices.SecondMatrix;
         var result = new long[matrix1.GetLength(0), matrix2.GetLength(1)];
         var divisor = GetDivisor(result).ToString();
 
@@ -68,6 +71,8 @@ public static class MatrixMultiplicationBase
         var tasks = new List<Task>();
 
         var count = matrix1.GetLength(0) / int.Parse(divisor);
+        var progressStep = 1.0 / count;
+        var currentProgress = 0.0d;
 
         for (int i = 0; i < int.Parse(divisor); i++)
         {
@@ -76,8 +81,15 @@ public static class MatrixMultiplicationBase
             tasks.Add(Task.Run(() =>
             {
                 for (int r = iterator * count; r < count * (iterator + 1); r++)
+                {
                     for (int c = 0; c < result.GetLength(1); c++)
+                    {
                         result[r, c] = DotProduct(GetRow(matrix1, r), GetColumn(matrix2, c));
+                    }
+
+                    currentProgress += progressStep;
+                    progress?.Report(currentProgress);
+                }
             }, token));
         }
 
@@ -85,7 +97,6 @@ public static class MatrixMultiplicationBase
 
         return result;
     }
-
 
     private static int GetDivisor(long[,] array)
     {

@@ -9,7 +9,7 @@
         d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
         Title="Matrix multiplication" 
         Height="450" 
-        Width="800"
+        Width="1000"
         MinHeight="350"
         MinWidth="715"
         FontFamily="Arial"
@@ -25,20 +25,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <ProgressBar x:Name="ProgressBar"
-            Grid.Column="1"
-            Grid.Row="1"
-            Background="White"
-            BorderThickness="0"
-            Visibility="Hidden"
-            Minimum="0"
-            Maximum="{Binding ResultItems}"
-            Width="350"
-            Height="35"
-            Value="10">
-
-        </ProgressBar>
 
         <Grid x:Name="MatrixSizesGrid"
             Grid.Column="0"
@@ -171,19 +157,18 @@
                     Clear
                 </Button>
 
-                <Button x:Name="ExecuteButton"
+                <Button x:Name="CalculateButton"
                         Width="250"
                         Height="40"
                         Margin="5 10 5 10"
-                        Click="ExecuteButton_OnClick"
-                        Command="{Binding MultiplyMatricesAsyncCommand}"
-                        Foreground="Red">
+                        Click="CalculateButton_OnClick"
+                        Command="{Binding SendMessagesCommand}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>
                         </Style>
                     </Button.Resources>
-                    Execute
+                    Calculate
                 </Button>
             </StackPanel>
         </Grid>

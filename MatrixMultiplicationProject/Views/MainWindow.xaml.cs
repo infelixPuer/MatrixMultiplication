@@ -8,6 +8,7 @@ public partial class MainWindow
     private readonly object _fillWithNumberView;
     private readonly object _fillWithCoordSumView;
     private readonly object _fillWithCoordProductView;
+    private readonly object _calculateView;
 
     public MainWindow()
     {
@@ -16,6 +17,7 @@ public partial class MainWindow
         _fillWithNumberView = new FillWithNumberView();
         _fillWithCoordSumView = new FillWithCoordSumView();
         _fillWithCoordProductView = new FillWithCoordsProductView();
+        _calculateView = new CalculateView();
     }
     private void ClearButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -38,9 +40,8 @@ public partial class MainWindow
         ContentControl.Content = _fillWithCoordProductView;
     }
 
-    private void ExecuteButton_OnClick(object sender, RoutedEventArgs e)
+    private void CalculateButton_OnClick(object sender, RoutedEventArgs e)
     {
-        ContentControl.Content = null;
-        ProgressBar.Visibility = Visibility.Visible;
+        ContentControl.Content = _calculateView;
     }
 }

@@ -26,18 +26,19 @@ public partial class MainViewModel : ObservableRecipient
     private int _secondMatrixColumns;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(MultiplyMatricesAsyncCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SendMessagesCommand))]
     private long[,]? _firstMatrix;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(MultiplyMatricesAsyncCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SendMessagesCommand))]
     private long[,]? _secondMatrix;
 
     [ObservableProperty] 
     private long[,]? _result;
 
-    [ObservableProperty] 
-    private long _resultItems;
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    private Work _work;
 
     [ObservableProperty] 
     private CancellationTokenSource _tokenSource;
@@ -57,6 +58,8 @@ public partial class MainViewModel : ObservableRecipient
     partial void OnFillingOptionChanged(Action<long[,], long[,]>? value)
     {
         FillingOption?.Invoke(FirstMatrix!, SecondMatrix!);
+
+        WeakReferenceMessenger.Default.Send(new Matrices(FirstMatrix!, SecondMatrix!));
     }
 
     partial void OnResultChanged(long[,]? value)
@@ -71,17 +74,24 @@ public partial class MainViewModel : ObservableRecipient
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
         IsConfirmed = true;
         Result = new long[FirstMatrixRows, SecondMatrixColumns];
-        ResultItems = FirstMatrixRows * SecondMatrixColumns;
+        Work = new Work(FirstMatrixRows * SecondMatrixColumns);
     }
 
     private bool CanClick() 
         => FirstMatrix is not null && SecondMatrix is not null;
     
 
+    //[RelayCommand(CanExecute = nameof(CanClick))]
+    //private async void MultiplyMatricesAsync()
+    //{
+    //    var token = TokenSource.Token;
+    //    Result = await MatrixMultiplicationBase.MultiplyAsync(FirstMatrix!, SecondMatrix!, token);
+    //}
+
     [RelayCommand(CanExecute = nameof(CanClick))]
-    private async void MultiplyMatricesAsync()
+    private void SendMessages()
     {
-        var token = TokenSource.Token;
-        Result = await MatrixMultiplicationBase.MultiplyAsync(FirstMatrix!, SecondMatrix!, token);
+        WeakReferenceMessenger.Default.Send(TokenSource);
+        WeakReferenceMessenger.Default.Send(Work);
     }
 }
