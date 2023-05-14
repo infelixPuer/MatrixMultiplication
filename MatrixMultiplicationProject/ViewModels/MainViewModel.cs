@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -36,6 +37,9 @@ public partial class MainViewModel : ObservableRecipient
     private long[,]? _result;
 
     [ObservableProperty] 
+    private long _resultItems;
+
+    [ObservableProperty] 
     private CancellationTokenSource _tokenSource;
 
     [ObservableProperty] 
@@ -55,12 +59,19 @@ public partial class MainViewModel : ObservableRecipient
         FillingOption?.Invoke(FirstMatrix!, SecondMatrix!);
     }
 
+    partial void OnResultChanged(long[,]? value)
+    {
+        MessageBox.Show($"{Result}");
+    }
+
     [RelayCommand]
     private void ConfirmMatrixSizes()
     {
         FirstMatrix = new long[FirstMatrixRows, FirstMatrixColumns];
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
         IsConfirmed = true;
+        Result = new long[FirstMatrixRows, SecondMatrixColumns];
+        ResultItems = FirstMatrixRows * SecondMatrixColumns;
     }
 
     private bool CanClick() 
@@ -68,9 +79,9 @@ public partial class MainViewModel : ObservableRecipient
     
 
     [RelayCommand(CanExecute = nameof(CanClick))]
-    private void MultiplyMatricesAsync()
+    private async void MultiplyMatricesAsync()
     {
         var token = TokenSource.Token;
-        Result = MatrixMultiplicationBase.MultiplyAsync(FirstMatrix!, SecondMatrix!, token).Result;
+        Result = await MatrixMultiplicationBase.MultiplyAsync(FirstMatrix!, SecondMatrix!, token);
     }
 }

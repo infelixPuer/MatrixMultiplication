@@ -26,6 +26,20 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <ProgressBar x:Name="ProgressBar"
+            Grid.Column="1"
+            Grid.Row="1"
+            Background="White"
+            BorderThickness="0"
+            Visibility="Hidden"
+            Minimum="0"
+            Maximum="{Binding ResultItems}"
+            Width="350"
+            Height="35"
+            Value="10">
+
+        </ProgressBar>
+
         <Grid x:Name="MatrixSizesGrid"
             Grid.Column="0"
             Grid.Row="0"
@@ -161,6 +175,7 @@
                         Width="250"
                         Height="40"
                         Margin="5 10 5 10"
+                        Click="ExecuteButton_OnClick"
                         Command="{Binding MultiplyMatricesAsyncCommand}"
                         Foreground="Red">
                     <Button.Resources>

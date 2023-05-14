@@ -37,4 +37,10 @@ public partial class MainWindow
     {
         ContentControl.Content = _fillWithCoordProductView;
     }
+
+    private void ExecuteButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        ContentControl.Content = null;
+        ProgressBar.Visibility = Visibility.Visible;
+    }
 }
