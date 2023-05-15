@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MatrixMultiplicationProject.Views"
+             xmlns:viewModels="clr-namespace:MatrixMultiplicationProject.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:FillWithCoordSumViewModel}"
              d:DesignHeight="450" 
              d:DesignWidth="800"
              FontFamily="Arial"
@@ -117,7 +119,8 @@
                 MinWidth="50"
                 MaxWidth="150"
                 Height="30"
-                HorizontalAlignment="Right">
+                HorizontalAlignment="Right"
+                Command="{Binding SendFillingOptionCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>

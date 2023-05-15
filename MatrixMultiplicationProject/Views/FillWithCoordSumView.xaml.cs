@@ -1,11 +1,12 @@
-﻿using System.Windows.Controls;
+﻿using MatrixMultiplicationProject.ViewModels;
 
 namespace MatrixMultiplicationProject.Views;
 
-public partial class FillWithCoordSumView : UserControl
+public partial class FillWithCoordSumView
 {
     public FillWithCoordSumView()
     {
         InitializeComponent();
+        DataContext = new FillWithCoordSumViewModel();
     }
 }

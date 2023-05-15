@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -54,6 +55,9 @@ public partial class MainViewModel : ObservableRecipient
     partial void OnFillingOptionChanged(Action<long[,], long[,]>? value)
     {
         FillingOption?.Invoke(FirstMatrix!, SecondMatrix!);
+
+        Debug.WriteLine($"First matrix 0-0: {FirstMatrix[0, 0]}; 1-0: {FirstMatrix[1, 0]}, 2-0: {FirstMatrix[2, 0]}");
+        Debug.WriteLine($"Second matrix 0-0: {SecondMatrix[0, 0]}; 1-0: {SecondMatrix[1, 0]}, 2-0: {SecondMatrix[2, 0]}");
 
         WeakReferenceMessenger.Default.Send(new Matrices(FirstMatrix!, SecondMatrix!));
     }
