@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ namespace MatrixMultiplicationProject.Models;
 
 public static class MatrixMultiplicationBase
 {
+    private static readonly object s_addingToProgressLocker = new();
+    private static readonly object s_reportingProgressLocker = new();
+
     public static void FillWithNumber(this long[,] matrix, long number)
     {
         for (int i = 0; i < matrix.GetLength(0); i++)
@@ -58,7 +62,7 @@ public static class MatrixMultiplicationBase
         return result;
     }
 
-    public static async Task<long[,]> MultiplyAsync(Matrices matrices, CancellationToken token, IProgress<double> progress = null)
+    public static async Task<long[,]> MultiplyAsync(Matrices matrices, CancellationToken token, IProgress<decimal> progress = null)
     {
         var matrix1 = matrices.FirstMatrix;
         var matrix2 = matrices.SecondMatrix;
@@ -71,8 +75,8 @@ public static class MatrixMultiplicationBase
         var tasks = new List<Task>();
 
         var count = matrix1.GetLength(0) / int.Parse(divisor);
-        var progressStep = 1.0 / count;
-        var currentProgress = 0.0d;
+        var progressStep = 1.0M / (result.GetLength(0) * result.GetLength(1));
+        var currentProgress = 0.0M;
 
         for (int i = 0; i < int.Parse(divisor); i++)
         {
@@ -85,12 +89,19 @@ public static class MatrixMultiplicationBase
                     for (int c = 0; c < result.GetLength(1); c++)
                     {
                         result[r, c] = DotProduct(GetRow(matrix1, r), GetColumn(matrix2, c));
+
+                        lock(s_addingToProgressLocker)
+                            currentProgress += progressStep;
                     }
 
-                    currentProgress += progressStep;
-                    progress?.Report(currentProgress);
+                    lock (s_reportingProgressLocker)
+                    {
+                        progress.Report(currentProgress);
+                        currentProgress = 0;
+                    }
                 }
             }, token));
+
         }
 
         await Task.WhenAll(tasks);

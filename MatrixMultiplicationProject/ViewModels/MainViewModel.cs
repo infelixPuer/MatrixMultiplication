@@ -36,10 +36,6 @@ public partial class MainViewModel : ObservableRecipient
     [ObservableProperty] 
     private long[,]? _result;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    private Work _work;
-
     [ObservableProperty] 
     private CancellationTokenSource _tokenSource;
 
@@ -74,7 +70,6 @@ public partial class MainViewModel : ObservableRecipient
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
         IsConfirmed = true;
         Result = new long[FirstMatrixRows, SecondMatrixColumns];
-        Work = new Work(FirstMatrixRows * SecondMatrixColumns);
     }
 
     private bool CanClick() 
@@ -92,6 +87,5 @@ public partial class MainViewModel : ObservableRecipient
     private void SendMessages()
     {
         WeakReferenceMessenger.Default.Send(TokenSource);
-        WeakReferenceMessenger.Default.Send(Work);
     }
 }
