@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -52,8 +53,8 @@ public partial class CalculateViewModel : ObservableObject
         });
     }
 
-    [RelayCommand]
-    private async void MultiplyMatricesAsync()
+    [RelayCommand(IncludeCancelCommand = true)]
+    private async Task MultiplyMatricesAsync(CancellationToken token)
     {
         var progress = new Progress<decimal>(task =>
         {
@@ -62,6 +63,6 @@ public partial class CalculateViewModel : ObservableObject
 
         ProgressStep = 1.0M / (Result.GetLength(0) * Result.GetLength(1));
         Token = _tokenSource.Token;
-        Result = await MatrixMultiplicationBase.MultiplyAsync(Matrices!, Token, progress);
+        Result = await MatrixMultiplicationBase.MultiplyAsync(Matrices!, token, progress);
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MatrixMultiplicationProject.Models;
 
@@ -78,33 +79,41 @@ public static class MatrixMultiplicationBase
         var progressStep = 1.0M / (result.GetLength(0) * result.GetLength(1));
         var currentProgress = 0.0M;
 
-        for (int i = 0; i < int.Parse(divisor); i++)
+        try
         {
-            var iterator = i;
-
-            tasks.Add(Task.Run(() =>
+            for (int i = 0; i < int.Parse(divisor); i++)
             {
-                for (int r = iterator * count; r < count * (iterator + 1); r++)
+                var iterator = i;
+
+                tasks.Add(Task.Run(() =>
                 {
-                    for (int c = 0; c < result.GetLength(1); c++)
+                    for (int r = iterator * count; r < count * (iterator + 1); r++)
                     {
-                        result[r, c] = DotProduct(GetRow(matrix1, r), GetColumn(matrix2, c));
+                        for (int c = 0; c < result.GetLength(1); c++)
+                        {
+                            result[r, c] = DotProduct(GetRow(matrix1, r), GetColumn(matrix2, c));
 
-                        lock(s_addingToProgressLocker)
-                            currentProgress += progressStep;
+                            lock (s_addingToProgressLocker)
+                                currentProgress += progressStep;
+                        }
+
+                        lock (s_reportingProgressLocker)
+                        {
+                            progress.Report(currentProgress);
+                            currentProgress = 0;
+                        }
                     }
+                }, token));
 
-                    lock (s_reportingProgressLocker)
-                    {
-                        progress.Report(currentProgress);
-                        currentProgress = 0;
-                    }
-                }
-            }, token));
+            }
 
+            await Task.WhenAll(tasks);
         }
-
-        await Task.WhenAll(tasks);
+        catch (OperationCanceledException e)
+        {
+            MessageBox.Show("Operation was cancelled!");
+            progress.Report(-1);
+        }
 
         return result;
     }
