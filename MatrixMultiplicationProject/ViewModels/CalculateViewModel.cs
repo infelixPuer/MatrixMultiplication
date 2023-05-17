@@ -25,10 +25,10 @@ public partial class CalculateViewModel : ObservableObject
     private long? _totalWork = 0;
 
     [ObservableProperty] 
-    private decimal? _doneWork = 0;
+    private double? _doneWork = 0;
 
     [ObservableProperty] 
-    private decimal _progressStep;
+    private double _progressStep;
 
     private readonly CancellationTokenSource _tokenSource = new();
 
@@ -38,7 +38,7 @@ public partial class CalculateViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(Result!);
     }
 
-    partial void OnDoneWorkChanged(decimal? value)
+    partial void OnDoneWorkChanged(double? value)
     {
         Debug.WriteLine(DoneWork);
     }
@@ -49,7 +49,6 @@ public partial class CalculateViewModel : ObservableObject
         {
             Matrices = m;
             Result = new long[m.FirstMatrix.GetLength(0), m.SecondMatrix.GetLength(1)];
-            //TotalWork = MatrixMultiplicationBase.GetTasksNumber(Result!, 1, 200, 5_000);
             TotalWork = 1;
         });
     }
@@ -57,12 +56,12 @@ public partial class CalculateViewModel : ObservableObject
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task MultiplyMatricesAsync(CancellationToken token)
     {
-        var progress = new Progress<decimal>(task =>
+        var progress = new Progress<double>(task =>
         {
             DoneWork += task;
         });
 
-        ProgressStep = 1.0M / (Result!.GetLength(0) * Result.GetLength(1));
+        ProgressStep = 1.0 / (Result!.GetLength(0) * Result.GetLength(1));
         Token = _tokenSource.Token;
         Result = await MatrixMultiplicationBase.MultiplyAsync(Matrices!, progress, token);
     }

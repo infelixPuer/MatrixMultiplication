@@ -34,28 +34,15 @@ public static class MatrixMultiplicationBase
                 matrix[i, j] = i * j;
     }
 
-    public static async Task<long[,]> MultiplyAsync(Matrices matrices, IProgress<decimal> progress, CancellationToken token)
+    public static async Task<long[,]> MultiplyAsync(Matrices matrices, IProgress<double> progress, CancellationToken token)
     {
-        var matrix1 = matrices.FirstMatrix;
-        var matrix2 = matrices.SecondMatrix;
-        var result = new long[matrix1.GetLength(0), matrix2.GetLength(1)];
+        var result = new long[matrices.FirstMatrix.GetLength(0), matrices.SecondMatrix.GetLength(1)];
         var size = result.GetLength(0) * result.GetLength(1);
-        //var tasksCount = GetDivisor(result).ToString();
-
-        //for (int i = 2; i < matrix1.GetLength(1).ToString().Length - 1; i++)
-        //    tasksCount += "0";
-
-        //var tasks = new Task[int.Parse(tasksCount)];
-
-        //var rowPerTask = matrix1.GetLength(0) / int.Parse(tasksCount);
-        //var progressStep = 1.0M / size;
-        //var currentProgress = 0.0M;
-
         var tasksCount = GetTaskCount(size);
         var tasks = new Task[tasksCount];
         var rowPerTask = (int)(result.GetLength(0) / tasksCount);
-        var progressStep = 1.0M / size;
-        var currentProgress = 0.0M;
+        var progressStep = 1.0/ size;
+        var currentProgress = 0.0;
 
         try
         {
@@ -69,7 +56,7 @@ public static class MatrixMultiplicationBase
                     {
                         for (int c = 0; c < result.GetLength(1); c++)
                         {
-                            result[r, c] = DotProduct(GetRow(matrix1, r), GetColumn(matrix2, c));
+                            result[r, c] = DotProduct(GetRow(matrices.FirstMatrix, r), GetColumn(matrices.SecondMatrix, c));
 
                             lock (s_addingToProgressLocker)
                                 currentProgress += progressStep;
@@ -101,13 +88,6 @@ public static class MatrixMultiplicationBase
 
     private static int GetTaskCount(int size) 
         => size < 1_000_000 ? (size < 5_000 ? 1 : size / 5_000) : 200;
-
-    private static int GetDivisor(long[,] array)
-    {
-        var arrayLength = array.GetLength(0);
-
-        return arrayLength < 10 ? 1 : 5;
-    }
 
     private static long DotProduct(long[] a, long[] b) =>
         a.Select((t, i) => t * b[i]).Sum();
