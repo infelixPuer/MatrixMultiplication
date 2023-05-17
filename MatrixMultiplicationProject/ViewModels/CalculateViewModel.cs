@@ -64,6 +64,6 @@ public partial class CalculateViewModel : ObservableObject
 
         ProgressStep = 1.0M / (Result.GetLength(0) * Result.GetLength(1));
         Token = _tokenSource.Token;
-        Result = await MatrixMultiplicationBase.MultiplyAsync(Matrices!, token, progress);
+        Result = await MatrixMultiplicationBase.MultiplyAsync(Matrices!, progress, token);
     }
 }

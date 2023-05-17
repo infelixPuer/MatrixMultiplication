@@ -34,60 +34,31 @@ public static class MatrixMultiplicationBase
                 matrix[i, j] = i * j;
     }
 
-    public static long[,] Multiply(long[,] matrix1, long[,] matrix2)
-    {
-        var result = new long[matrix1.GetLength(0), matrix2.GetLength(1)];
-        var divisor = GetDivisor(result).ToString();
-
-        for (int i = 2; i < matrix1.GetLength(1).ToString().Length - 1; i++)
-            divisor += "0";
-
-        var taskArray = new Task[int.Parse(divisor)];
-
-        var count = matrix1.GetLength(0) / int.Parse(divisor);
-
-        for (int i = 0; i < taskArray.Length; i++)
-        {
-            var iterator = i;
-
-            taskArray[i] = Task.Factory.StartNew(() =>
-            {
-                for (int r = iterator * count; r < count * (iterator + 1); r++)
-                    for (int c = 0; c < result.GetLength(1); c++)
-                        result[r, c] = DotProduct(GetRow(matrix1, r), GetColumn(matrix2, c));
-            });
-        }
-
-        Task.WaitAll(taskArray);
-
-        return result;
-    }
-
-    public static async Task<long[,]> MultiplyAsync(Matrices matrices, CancellationToken token, IProgress<decimal> progress = null)
+    public static async Task<long[,]> MultiplyAsync(Matrices matrices, IProgress<decimal> progress, CancellationToken token)
     {
         var matrix1 = matrices.FirstMatrix;
         var matrix2 = matrices.SecondMatrix;
         var result = new long[matrix1.GetLength(0), matrix2.GetLength(1)];
-        var divisor = GetDivisor(result).ToString();
+        var tasksCount = GetDivisor(result).ToString();
 
         for (int i = 2; i < matrix1.GetLength(1).ToString().Length - 1; i++)
-            divisor += "0";
+            tasksCount += "0";
 
-        var tasks = new List<Task>();
+        var tasks = new Task[int.Parse(tasksCount)];
 
-        var count = matrix1.GetLength(0) / int.Parse(divisor);
+        var rowPerTask = matrix1.GetLength(0) / int.Parse(tasksCount);
         var progressStep = 1.0M / (result.GetLength(0) * result.GetLength(1));
         var currentProgress = 0.0M;
 
         try
         {
-            for (int i = 0; i < int.Parse(divisor); i++)
+            for (int i = 0; i < int.Parse(tasksCount); i++)
             {
                 var iterator = i;
 
-                tasks.Add(Task.Run(() =>
+                tasks[iterator] = Task.Run(() =>
                 {
-                    for (int r = iterator * count; r < count * (iterator + 1); r++)
+                    for (int r = iterator * rowPerTask; r < rowPerTask * (iterator + 1); r++)
                     {
                         for (int c = 0; c < result.GetLength(1); c++)
                         {
@@ -103,8 +74,7 @@ public static class MatrixMultiplicationBase
                             currentProgress = 0;
                         }
                     }
-                }, token));
-
+                }, token);
             }
 
             await Task.WhenAll(tasks);

@@ -160,7 +160,7 @@
                 <Button x:Name="CalculateButton"
                         Width="250"
                         Height="40"
-                        Margin="5 10 5 10"
+                        Margin="5 10 5 0"
                         Click="CalculateButton_OnClick"
                         Command="{Binding SendMessagesCommand}">
                     <Button.Resources>
