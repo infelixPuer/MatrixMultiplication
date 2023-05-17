@@ -35,6 +35,7 @@ public partial class CalculateViewModel : ObservableObject
     partial void OnResultChanged(long[,]? value)
     {
         MessageBox.Show($"{Result} changed!");
+        WeakReferenceMessenger.Default.Send(Result!);
     }
 
     partial void OnDoneWorkChanged(decimal? value)

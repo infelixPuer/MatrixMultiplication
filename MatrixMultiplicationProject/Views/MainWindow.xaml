@@ -170,6 +170,20 @@
                     </Button.Resources>
                     Calculate
                 </Button>
+
+                <Button x:Name="GenerateImageButton"
+                        Width="250"
+                        Height="40"
+                        Margin="5 10 5 10"
+                        IsEnabled="{Binding IsConfirmed}"
+                        Command="{Binding GenerateImageCommand}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Generate image
+                </Button>
             </StackPanel>
         </Grid>
 

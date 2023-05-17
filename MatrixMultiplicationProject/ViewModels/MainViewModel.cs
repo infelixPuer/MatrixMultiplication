@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -50,6 +53,11 @@ public partial class MainViewModel : ObservableRecipient
         {
             FillingOption = m;
         });
+
+        WeakReferenceMessenger.Default.Register<long[,]>(this, (r, m) =>
+        {
+            Result = m;
+        });
     }
 
     partial void OnFillingOptionChanged(Action<long[,], long[,]>? value)
@@ -91,5 +99,35 @@ public partial class MainViewModel : ObservableRecipient
     private void SendMessages()
     {
         WeakReferenceMessenger.Default.Send(TokenSource);
+    }
+
+    [RelayCommand]
+    private void GenerateImage()
+    {
+        var bitmap = new Bitmap(Result!.GetLength(0), Result.GetLength(1));
+        var max = GetMax(Result);
+        var multiplier = 255.0M / max;
+
+        for (int i = 0; i < Result.GetLength(0); i++)
+        {
+            for (int j = 0; j < Result.GetLength(1); j++)
+            {
+                bitmap.SetPixel(i, j, Color.FromArgb(255, Color.FromArgb(1, (int)(Result[i, j] * multiplier), 127, 0)));
+                
+            }
+        }
+
+        bitmap.Save("image.bmp");
+    }
+
+    private long GetMax(long[,] matrix)
+    {
+        var max = long.MinValue;
+
+        for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int j = 0; j < matrix.GetLength(1); j++)
+                max = matrix[i, j] > max ? matrix[i, j] : max;
+
+        return max;
     }
 }
