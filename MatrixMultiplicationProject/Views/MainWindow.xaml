@@ -162,7 +162,7 @@
                         Height="40"
                         Margin="5 10 5 0"
                         Click="CalculateButton_OnClick"
-                        Command="{Binding SendMessagesCommand}">
+                        IsEnabled="{Binding IsConfirmed}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="10"/>

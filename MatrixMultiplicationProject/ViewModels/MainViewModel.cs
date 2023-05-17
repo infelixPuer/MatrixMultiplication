@@ -28,11 +28,9 @@ public partial class MainViewModel : ObservableRecipient
     private int _secondMatrixColumns;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(SendMessagesCommand))]
     private long[,]? _firstMatrix;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(SendMessagesCommand))]
     private long[,]? _secondMatrix;
 
     [ObservableProperty] 
@@ -80,15 +78,6 @@ public partial class MainViewModel : ObservableRecipient
         SecondMatrix = new long[SecondMatrixRows, SecondMatrixColumns];
         IsConfirmed = true;
         Result = new long[FirstMatrixRows, SecondMatrixColumns];
-    }
-
-    private bool CanClick() 
-        => FirstMatrix is not null && SecondMatrix is not null;
-
-    [RelayCommand(CanExecute = nameof(CanClick))]
-    private void SendMessages()
-    {
-        WeakReferenceMessenger.Default.Send(TokenSource);
     }
 
     [RelayCommand]
