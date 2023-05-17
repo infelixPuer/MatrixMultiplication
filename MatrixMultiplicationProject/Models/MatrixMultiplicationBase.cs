@@ -43,6 +43,7 @@ public static class MatrixMultiplicationBase
         var rowPerTask = (int)(result.GetLength(0) / tasksCount);
         var progressStep = 1.0/ size;
         var currentProgress = 0.0;
+        var totalProgress = 0.0;
 
         try
         {
@@ -64,6 +65,7 @@ public static class MatrixMultiplicationBase
 
                         lock (s_reportingProgressLocker)
                         {
+                            totalProgress += currentProgress;
                             progress.Report(currentProgress);
                             currentProgress = 0;
                         }
@@ -76,12 +78,12 @@ public static class MatrixMultiplicationBase
         catch (OperationCanceledException e)
         {
             MessageBox.Show("Operation was cancelled!");
-            progress.Report(-1);
+            progress.Report(totalProgress);
+            return null;
         }
-        finally
-        {
-            tasks = null;
-        }
+
+        if (totalProgress < 1.0)
+            progress.Report(1.0 - totalProgress);
 
         return result;
     }
