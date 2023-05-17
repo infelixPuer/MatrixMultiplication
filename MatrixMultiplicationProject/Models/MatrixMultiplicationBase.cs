@@ -39,20 +39,27 @@ public static class MatrixMultiplicationBase
         var matrix1 = matrices.FirstMatrix;
         var matrix2 = matrices.SecondMatrix;
         var result = new long[matrix1.GetLength(0), matrix2.GetLength(1)];
-        var tasksCount = GetDivisor(result).ToString();
+        var size = result.GetLength(0) * result.GetLength(1);
+        //var tasksCount = GetDivisor(result).ToString();
 
-        for (int i = 2; i < matrix1.GetLength(1).ToString().Length - 1; i++)
-            tasksCount += "0";
+        //for (int i = 2; i < matrix1.GetLength(1).ToString().Length - 1; i++)
+        //    tasksCount += "0";
 
-        var tasks = new Task[int.Parse(tasksCount)];
+        //var tasks = new Task[int.Parse(tasksCount)];
 
-        var rowPerTask = matrix1.GetLength(0) / int.Parse(tasksCount);
-        var progressStep = 1.0M / (result.GetLength(0) * result.GetLength(1));
+        //var rowPerTask = matrix1.GetLength(0) / int.Parse(tasksCount);
+        //var progressStep = 1.0M / size;
+        //var currentProgress = 0.0M;
+
+        var tasksCount = GetTaskCount(size);
+        var tasks = new Task[tasksCount];
+        var rowPerTask = (int)(result.GetLength(0) / tasksCount);
+        var progressStep = 1.0M / size;
         var currentProgress = 0.0M;
 
         try
         {
-            for (int i = 0; i < int.Parse(tasksCount); i++)
+            for (int i = 0; i < tasksCount; i++)
             {
                 var iterator = i;
 
@@ -84,9 +91,16 @@ public static class MatrixMultiplicationBase
             MessageBox.Show("Operation was cancelled!");
             progress.Report(-1);
         }
+        finally
+        {
+            tasks = null;
+        }
 
         return result;
     }
+
+    private static int GetTaskCount(int size) 
+        => size < 1_000_000 ? (size < 5_000 ? 1 : size / 5_000) : 200;
 
     private static int GetDivisor(long[,] array)
     {
