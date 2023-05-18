@@ -81,7 +81,7 @@ public partial class MainViewModel : ObservableRecipient
 
         for (int i = 0; i < Result.GetLength(0); i++)
             for (int j = 0; j < Result.GetLength(1); j++)
-                bitmap.SetPixel(i, j, Color.FromArgb(255, (int)(Result[i, j] * multiplier), 127, 0));
+                bitmap.SetPixel(i, j, Color.FromArgb(255, (int)(Result[i, j] * multiplier), 0, 0));
                 
 
         bitmap.Save("image.bmp");

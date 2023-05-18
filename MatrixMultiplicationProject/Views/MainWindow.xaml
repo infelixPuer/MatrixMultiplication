@@ -115,6 +115,21 @@
                     Fill with one number
                 </Button>
 
+                <Button
+                    x:Name="FillWithRandomNumbersButton"
+                    Width="250"
+                    Height="40"
+                    Margin="5 10 5 0"
+                    Click="FillWithRandomNumbersButton_OnClick"
+                    IsEnabled="{Binding IsConfirmed}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                    Fill with random numbers
+                </Button>
+
                 <Button x:Name="FillWithCoordsSumButton"
                     Width="250"
                     Height="40"
