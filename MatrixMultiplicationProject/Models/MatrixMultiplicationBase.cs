@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -77,7 +75,7 @@ public static class MatrixMultiplicationBase
         }
         catch (OperationCanceledException e)
         {
-            //progress.Report(totalProgress);
+            MessageBox.Show($"Multiplication was cancelled at {(int)(totalProgress * 100)}%!");
         }
 
         if (totalProgress < 1.0 && !token.IsCancellationRequested)
