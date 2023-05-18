@@ -60,15 +60,7 @@ public partial class MainViewModel : ObservableRecipient
     {
         FillingOption?.Invoke(FirstMatrix!, SecondMatrix!);
 
-        Debug.WriteLine($"First matrix 0-0: {FirstMatrix![0, 0]}; 1-0: {FirstMatrix[1, 0]}, 2-0: {FirstMatrix[2, 0]}");
-        Debug.WriteLine($"Second matrix 0-0: {SecondMatrix![0, 0]}; 1-0: {SecondMatrix[1, 0]}, 2-0: {SecondMatrix[2, 0]}");
-
         WeakReferenceMessenger.Default.Send(new Matrices(FirstMatrix!, SecondMatrix!));
-    }
-
-    partial void OnResultChanged(long[,]? value)
-    {
-        MessageBox.Show($"{Result}");
     }
 
     [RelayCommand]

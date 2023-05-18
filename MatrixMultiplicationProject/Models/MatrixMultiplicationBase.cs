@@ -77,12 +77,10 @@ public static class MatrixMultiplicationBase
         }
         catch (OperationCanceledException e)
         {
-            MessageBox.Show("Operation was cancelled!");
-            progress.Report(totalProgress);
-            return null;
+            //progress.Report(totalProgress);
         }
 
-        if (totalProgress < 1.0)
+        if (totalProgress < 1.0 && !token.IsCancellationRequested)
             progress.Report(1.0 - totalProgress);
 
         return result;

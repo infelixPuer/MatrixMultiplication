@@ -34,13 +34,7 @@ public partial class CalculateViewModel : ObservableObject
 
     partial void OnResultChanged(long[,]? value)
     {
-        MessageBox.Show($"{Result} changed!");
         WeakReferenceMessenger.Default.Send(Result!);
-    }
-
-    partial void OnDoneWorkChanged(double? value)
-    {
-        Debug.WriteLine(DoneWork);
     }
 
     public CalculateViewModel()
@@ -56,6 +50,8 @@ public partial class CalculateViewModel : ObservableObject
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task MultiplyMatricesAsync(CancellationToken token)
     {
+        DoneWork = 0;
+
         var progress = new Progress<double>(task =>
         {
             DoneWork += task;
